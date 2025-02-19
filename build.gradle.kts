@@ -1,19 +1,22 @@
 plugins {
     id("java")
+    alias(libs.plugins.fabric.loom)
 }
 
-group = "com.filkond"
-version = "1.0-SNAPSHOT"
+group = "com.filkond.pigtagger"
+
+java.sourceCompatibility = JavaVersion.VERSION_17
+java.targetCompatibility = JavaVersion.VERSION_17
+java.toolchain.languageVersion = JavaLanguageVersion.of(17)
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    testImplementation(platform("org.junit:junit-bom:5.10.0"))
-    testImplementation("org.junit.jupiter:junit-jupiter")
-}
+    minecraft(libs.minecraft.mc1204)
+    mappings(loom.officialMojangMappings())
 
-tasks.test {
-    useJUnitPlatform()
+    compileOnly(libs.jetbrains.annotations)
+    implementation(libs.gson)
 }

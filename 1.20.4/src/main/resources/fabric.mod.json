@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "id": "pigtagger",
+  "version": "${version}",
+
+  "name": "PigTagger",
+  "description": "",
+  "authors": ["FiLKoNd"],
+  "contact": {},
+
+  "license": "All-Rights-Reserved",
+  "icon": "assets/pigtagger/icon.png",
+
+  "environment": "client",
+  "entrypoints": {
+    "client": ["com.filkond.pigtagger.PigTaggerMod"]
+  },
+
+  "mixins": [
+    "pigtagger.mixins.json"
+  ],
+
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}
