@@ -3,12 +3,12 @@ package com.filkond.pigtagger;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.gui.components.Checkbox;
 import net.minecraft.client.gui.components.EditBox;
-import net.minecraft.client.gui.components.FocusableTextWidget;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 public class PigConfigScreen extends Screen {
     private final Screen parent;
@@ -18,6 +18,7 @@ public class PigConfigScreen extends Screen {
     private EditBox yOffset;
 
     private EditBox badgeScale;
+    private EditBox ignoredTiers;
 
     public PigConfigScreen(Screen parent) {
         super(Component.translatable("pigtagger.menu"));
@@ -38,7 +39,7 @@ public class PigConfigScreen extends Screen {
         box.setTooltipDelay(250);
         this.addRenderableWidget(box);
 
-        this.badgeScale = new EditBox(this.font, width / 2 + OFFSET, height / 4, width / 6, 20, this.badgeScale, Component.translatable("pigtagger.config.badge.scale"));
+        this.badgeScale = new EditBox(this.font, width / 2 + OFFSET, height / 4, width / 6 - OFFSET, 20, this.badgeScale, Component.translatable("pigtagger.config.badge.scale"));
         this.badgeScale.setHint(this.badgeScale.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.badgeScale.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.badge.scale.tooltip")));
         this.badgeScale.setTooltipDelay(250);
@@ -55,7 +56,7 @@ public class PigConfigScreen extends Screen {
         this.badgeScale.setValue(PigConfig.badgeScale == 0.01F ? "" : String.valueOf(PigConfig.badgeScale));
         this.addRenderableWidget(this.badgeScale);
 
-        this.xOffset = new EditBox(this.font, width / 3 , height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
+        this.xOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
         this.xOffset.setHint(this.xOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.xOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.xOffset.tooltip")));
         this.xOffset.setTooltipDelay(250);
@@ -73,7 +74,7 @@ public class PigConfigScreen extends Screen {
         this.addRenderableWidget(this.xOffset);
 
 
-        this.yOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
+        this.yOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6 - OFFSET, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
         this.yOffset.setHint(this.yOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.yOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.yOffset.tooltip")));
         this.yOffset.setTooltipDelay(250);
@@ -89,6 +90,30 @@ public class PigConfigScreen extends Screen {
         });
         this.yOffset.setValue(PigConfig.yOffset == 0.4F ? "" : String.valueOf(PigConfig.yOffset));
         this.addRenderableWidget(this.yOffset);
+
+        this.ignoredTiers = new EditBox(this.font, width / 3, height / 3 + OFFSET, width / 3, 20, this.yOffset, Component.translatable("pigtagger.config.ignoredKits"));
+        this.ignoredTiers.setHint(this.ignoredTiers.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
+        this.ignoredTiers.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.ignoredKits.tooltip")));
+        this.ignoredTiers.setTooltipDelay(250);
+        this.ignoredTiers.setMaxLength(128);
+        this.ignoredTiers.setResponder(value -> {
+            Set<Kit> out = new HashSet<>();
+            for (String s : value.split(",")) {
+                try {
+                    Kit kit = Kit.valueOf(s);
+                    out.add(kit);
+                } catch (IllegalArgumentException ignored) {
+                }
+            }
+            PigConfig.ignoredKits = out;
+        });
+        this.ignoredTiers.setValue(
+                String.join(",", PigConfig.ignoredKits.stream()
+                        .map(Enum::name)
+                        .toList()
+                )
+        );
+        this.addRenderableWidget(this.ignoredTiers);
     }
 
     @Override

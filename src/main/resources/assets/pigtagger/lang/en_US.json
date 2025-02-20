@@ -6,5 +6,7 @@
   "pigtagger.config.badge.scale.tooltip": "Badge's scale",
   "pigtagger.config.xOffset.tooltip": "Distance between badges",
   "pigtagger.config.yOffset": "Y offset",
-  "pigtagger.config.yOffset.tooltip": "Distance to badges above the player's head"
+  "pigtagger.config.yOffset.tooltip": "Distance to badges above the player's head",
+  "pigtagger.config.ignoredKits": "Kits that should not rendering separated by commas",
+  "pigtagger.config.ignoredKits.tooltip": "Kits that should not rendering, smth like: UHC,SMP,SWORD,VANILLA,NETHPOT"
 }

@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Collections;
 import java.util.Set;
 
 /**
@@ -42,7 +43,7 @@ public class PigConfig {
     /**
      * Kits whose badges should not be rendering
      */
-    public static Set<Kit> ignoredKits = Set.of(Kit.SWORD);
+    public static Set<Kit> ignoredKits = Collections.emptySet();
 
     public static void load(@NotNull Path path) {
         try {
