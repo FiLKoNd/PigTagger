@@ -1,0 +1,4 @@
+{
+  "pigtagger.config.ignoreSelf": "Ignore self",
+  "pigtagger.config.ignoreSelf.tooltip": "Your own the tier badges should not be rendering"
+}

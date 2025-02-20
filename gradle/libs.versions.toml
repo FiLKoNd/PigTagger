@@ -1,9 +1,10 @@
 [versions]
 fabric-loom = "1.10-SNAPSHOT"
+
 gson = "2.12.1"
 mixin = "0.8.7"
 jetbrains_annotations = "26.0.2"
-yarn-mappings-mc1204 = "1.20.4+build.3"
+
 fabric-loader = "0.16.10"
 fabric-mc1201 = "0.92.3+1.20.1"
 fabric-mc1202 = "0.91.6+1.20.2"
@@ -12,6 +13,7 @@ fabric-mc1206 = "0.100.8+1.20.6"
 fabric-mc1211 = "0.115.0+1.21.1"
 fabric-mc1213 = "0.114.0+1.21.3"
 fabric-mc1214 = "0.117.0+1.21.4"
+
 minecraft-mc1201 = "1.20.1"
 minecraft-mc1202 = "1.20.2"
 minecraft-mc1204 = "1.20.4"
@@ -19,6 +21,7 @@ minecraft-mc1206 = "1.20.6"
 minecraft-mc1211 = "1.21.1"
 minecraft-mc1213 = "1.21.3"
 minecraft-mc1214 = "1.21.4"
+
 modmenu-mc1201 = "7.2.2"
 modmenu-mc1202 = "8.0.1"
 modmenu-mc1204 = "9.2.0"
@@ -34,7 +37,9 @@ fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
 jetbrains_annotations = { module = "org.jetbrains:annotations", version.ref = "jetbrains_annotations" }
 gson = { module = "com.google.code.gson:gson", version.ref = "gson" }
 mixin = { module = "org.spongepowered:mixin", version.ref = "mixin" }
+
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
+
 fabric-mc1201 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1201" }
 fabric-mc1202 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1202" }
 fabric-mc1204 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1204" }
@@ -42,6 +47,7 @@ fabric-mc1206 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "
 fabric-mc1211 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1211" }
 fabric-mc1213 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1213" }
 fabric-mc1214 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1214" }
+
 minecraft-mc1201 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1201" }
 minecraft-mc1202 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1202" }
 minecraft-mc1204 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1204" }
@@ -49,6 +55,7 @@ minecraft-mc1206 = { module = "com.mojang:minecraft", version.ref = "minecraft-m
 minecraft-mc1211 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1211" }
 minecraft-mc1213 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1213" }
 minecraft-mc1214 = { module = "com.mojang:minecraft", version.ref = "minecraft-mc1214" }
+
 modmenu-mc1201 = { module = "com.terraformersmc:modmenu", version.ref = "modmenu-mc1201" }
 modmenu-mc1202 = { module = "com.terraformersmc:modmenu", version.ref = "modmenu-mc1202" }
 modmenu-mc1204 = { module = "com.terraformersmc:modmenu", version.ref = "modmenu-mc1204" }

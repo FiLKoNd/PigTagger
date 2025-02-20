@@ -9,6 +9,7 @@ import java.lang.reflect.Modifier;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardOpenOption;
+import java.util.Set;
 
 /**
  * Определенно не спизженно
@@ -37,6 +38,11 @@ public class PigConfig {
      * If {@code true} your own tier badges should not be rendering
      */
     public static boolean ignoreSelf = true;
+
+    /**
+     * Kits whose badges should not be rendering
+     */
+    public static Set<Kit> ignoredKits = Set.of(Kit.SWORD);
 
     public static void load(@NotNull Path path) {
         try {

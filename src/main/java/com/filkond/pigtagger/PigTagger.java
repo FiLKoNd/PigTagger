@@ -55,7 +55,12 @@ public class PigTagger {
         }
     }
 
-    public static Map<Kit, Tier> getTiersByNickname(@NotNull String nickname) {
+    /**
+     * Get all the tiers that player have
+     * @param nickname Player's nickname
+     * @return {@link Kit} collection that mapped to {@link Tier}
+     */
+    public static @NotNull Map<Kit, Tier> getTiersByNickname(@NotNull String nickname) {
         Map<Kit, Tier> out = new HashMap<>();
         for (Kit kit : Kit.values()) {
             Tier tier = kit.getTierByNickname(nickname);
@@ -63,6 +68,17 @@ public class PigTagger {
                 out.put(kit, tier);
             }
         }
+        return out;
+    }
+
+    /**
+     * Get all the tiers that player have, except for {@link PigConfig#ignoredKits}
+     * @param nickname Player's nickname
+     * @return {@link Kit} collection that mapped to {@link Tier}
+     */
+    public static @NotNull Map<Kit, Tier> getEnabledTiersByNickname(@NotNull String nickname) {
+        Map<Kit, Tier> out = getTiersByNickname(nickname);
+        PigConfig.ignoredKits.forEach(out::remove);
         return out;
     }
 }

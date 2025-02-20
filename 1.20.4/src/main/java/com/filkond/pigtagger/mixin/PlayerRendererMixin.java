@@ -1,11 +1,11 @@
 package com.filkond.pigtagger.mixin;
 
 import com.filkond.pigtagger.Kit;
+import com.filkond.pigtagger.PigConfig;
 import com.filkond.pigtagger.PigTagger;
 import com.filkond.pigtagger.Tier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -35,34 +35,37 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
     }
 
     @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
-    private void render(AbstractClientPlayer abstractClientPlayer, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int i, CallbackInfo ci) {
-        renderBadges(abstractClientPlayer, poseStack, i);
+    private void render(AbstractClientPlayer player, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, CallbackInfo ci) {
+        if (!PigConfig.ignoreSelf) {
+            renderBadges(player, poseStack, light);
+        }
     }
 
     @Inject(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
     private void renderNameTag(AbstractClientPlayer player, Component component, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, CallbackInfo ci) {
-//        renderBadges(player, poseStack, light);
+        if (PigConfig.ignoreSelf) {
+            renderBadges(player, poseStack, light);
+        }
     }
 
     @Unique
     private void renderBadges(AbstractClientPlayer player, PoseStack poseStack, int light) {
-        Map<Kit, Tier> tiers = PigTagger.getTiersByNickname(player.getName().getString());
+        Map<Kit, Tier> tiers = PigTagger.getEnabledTiersByNickname(player.getName().getString());
         if (tiers.isEmpty()) return;
 
-        float scale = 0.01F;
+        float scale = PigConfig.badgeScale;
 
         poseStack.pushPose();
 
-        poseStack.translate(0, player.getBbHeight() + 0.5f, 0);
+        poseStack.translate(0, player.getBbHeight() + PigConfig.yOffset, 0);
         poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
         poseStack.scale(scale, scale, scale);
 
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder vertexConsumer = tesselator.getBuilder();
 
-        float offset = 4F;
-        float xSize = 35F;
-        float maxX = xSize * tiers.size() + offset * (tiers.size() - 1);
+        float offset = PigConfig.xOffset;
+        float maxX = BADGE_WIDTH * tiers.size() + offset * (tiers.size() - 1);
 
         float x = -maxX / 2;
         for (Map.Entry<Kit, Tier> entry : tiers.entrySet()) {
@@ -82,7 +85,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
                     light
             );
             tesselator.end();
-            x += xSize + offset;
+            x += BADGE_WIDTH + offset;
         }
 
         poseStack.popPose();
@@ -97,16 +100,16 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
         RenderSystem.setShaderTexture(0, icon);
 
-        drawVertex(model, vertexConsumer, x, 0F - BADGE_HEIGHT, 0, minU, maxV, light);
-        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0F - BADGE_HEIGHT, 0, maxU, maxV, light);
-        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0, 0, maxU, minV, light);
-        drawVertex(model, vertexConsumer, x, 0, 0, minU, minV, light);
+        drawVertex(model, vertexConsumer, x, 0F - BADGE_HEIGHT, minU, maxV, light);
+        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0F - BADGE_HEIGHT, maxU, maxV, light);
+        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0, maxU, minV, light);
+        drawVertex(model, vertexConsumer, x, 0, minU, minV, light);
     }
 
     @Unique
-    private void drawVertex(Matrix4f model, BufferBuilder vertexConsumer, float x, float y, float z, float u, float v, int light) {
+    private void drawVertex(Matrix4f model, BufferBuilder vertexConsumer, float x, float y, float u, float v, int light) {
         vertexConsumer
-                .vertex(model, x, y, z)
+                .vertex(model, x, y, 0F)
                 .uv(u, v)
                 .endVertex();
     }

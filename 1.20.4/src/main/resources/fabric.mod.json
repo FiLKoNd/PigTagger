@@ -13,7 +13,8 @@
 
   "environment": "client",
   "entrypoints": {
-    "client": ["com.filkond.pigtagger.PigTaggerMod"]
+    "client": ["com.filkond.pigtagger.PigTaggerMod"],
+    "modmenu": ["com.filkond.pigtagger.PigModMenu"]
   },
 
   "mixins": [

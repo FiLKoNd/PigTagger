@@ -10,6 +10,9 @@ base.archivesName = "PigTagger-1.20.4"
 
 repositories {
     maven("https://repo.spongepowered.org/repository/maven-public/")
+
+    maven("https://maven.terraformersmc.com/releases/")
+    maven("https://maven.nucleoid.xyz/")
 }
 
 loom {
@@ -31,6 +34,7 @@ dependencies {
 
     modImplementation(libs.fabric.loader)
     modImplementation(libs.fabric.mc1204)
+    modImplementation(libs.modmenu.mc1204)
 
     compileOnly(libs.mixin)
 
