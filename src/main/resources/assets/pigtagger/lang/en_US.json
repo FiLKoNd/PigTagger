@@ -1,4 +1,10 @@
 {
   "pigtagger.config.ignoreSelf": "Ignore self",
-  "pigtagger.config.ignoreSelf.tooltip": "Your own the tier badges should not be rendering"
+  "pigtagger.config.ignoreSelf.tooltip": "Your own the tier badges should not be rendering",
+  "pigtagger.config.xOffset": "X offset",
+  "pigtagger.config.badge.scale": "Badge's scale",
+  "pigtagger.config.badge.scale.tooltip": "Badge's scale",
+  "pigtagger.config.xOffset.tooltip": "Distance between badges",
+  "pigtagger.config.yOffset": "Y offset",
+  "pigtagger.config.yOffset.tooltip": "Distance to badges above the player's head"
 }

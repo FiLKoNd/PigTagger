@@ -55,7 +55,7 @@ public class PigConfigScreen extends Screen {
         this.badgeScale.setValue(PigConfig.badgeScale == 0.01F ? "" : String.valueOf(PigConfig.badgeScale));
         this.addRenderableWidget(this.badgeScale);
 
-        this.xOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
+        this.xOffset = new EditBox(this.font, width / 3 , height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
         this.xOffset.setHint(this.xOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.xOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.xOffset.tooltip")));
         this.xOffset.setTooltipDelay(250);
@@ -73,7 +73,7 @@ public class PigConfigScreen extends Screen {
         this.addRenderableWidget(this.xOffset);
 
 
-        this.yOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
+        this.yOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
         this.yOffset.setHint(this.yOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.yOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.yOffset.tooltip")));
         this.yOffset.setTooltipDelay(250);
@@ -83,11 +83,11 @@ public class PigConfigScreen extends Screen {
                 PigConfig.yOffset = Float.parseFloat(value);
                 this.yOffset.setTextColor(0xFF_E0_E0_E0);
             } catch (NumberFormatException e) {
-                PigConfig.yOffset = 4F;
+                PigConfig.yOffset = 0.4F;
                 this.yOffset.setTextColor(0xFF_FF_00_00);
             }
         });
-        this.yOffset.setValue(PigConfig.yOffset == 4.0F ? "" : String.valueOf(PigConfig.yOffset));
+        this.yOffset.setValue(PigConfig.yOffset == 0.4F ? "" : String.valueOf(PigConfig.yOffset));
         this.addRenderableWidget(this.yOffset);
     }
 

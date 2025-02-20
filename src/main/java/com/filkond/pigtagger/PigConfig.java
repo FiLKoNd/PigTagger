@@ -27,7 +27,7 @@ public class PigConfig {
     /**
      * Distance to badges above the player's head
      */
-    public static float yOffset = 4F;
+    public static float yOffset = 0.4F;
 
     /**
      * Badge's scale
