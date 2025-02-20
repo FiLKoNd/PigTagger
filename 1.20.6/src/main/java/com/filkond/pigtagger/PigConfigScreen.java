@@ -7,6 +7,7 @@ import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 
+import java.time.Duration;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,13 +37,13 @@ public class PigConfigScreen extends Screen {
                 })
                 .tooltip(Tooltip.create(Component.translatable("pigtagger.config.ignoreSelf.tooltip")))
                 .build();
-        box.setTooltipDelay(250);
+        box.setTooltipDelay(Duration.ofMillis(250L));
         this.addRenderableWidget(box);
 
         this.badgeScale = new EditBox(this.font, width / 2 + OFFSET, height / 4, width / 6 - OFFSET, 20, this.badgeScale, Component.translatable("pigtagger.config.badge.scale"));
         this.badgeScale.setHint(this.badgeScale.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.badgeScale.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.badge.scale.tooltip")));
-        this.badgeScale.setTooltipDelay(250);
+        this.badgeScale.setTooltipDelay(Duration.ofMillis(250L));
         this.badgeScale.setMaxLength(128);
         this.badgeScale.setResponder(value -> {
             try {
@@ -59,7 +60,7 @@ public class PigConfigScreen extends Screen {
         this.xOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
         this.xOffset.setHint(this.xOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.xOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.xOffset.tooltip")));
-        this.xOffset.setTooltipDelay(250);
+        this.xOffset.setTooltipDelay(Duration.ofMillis(250L));
         this.xOffset.setMaxLength(128);
         this.xOffset.setResponder(value -> {
             try {
@@ -77,7 +78,7 @@ public class PigConfigScreen extends Screen {
         this.yOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6 - OFFSET, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
         this.yOffset.setHint(this.yOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.yOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.yOffset.tooltip")));
-        this.yOffset.setTooltipDelay(250);
+        this.yOffset.setTooltipDelay(Duration.ofMillis(250L));
         this.yOffset.setMaxLength(128);
         this.yOffset.setResponder(value -> {
             try {
@@ -94,7 +95,7 @@ public class PigConfigScreen extends Screen {
         this.ignoredTiers = new EditBox(this.font, width / 3, height / 4 + (20 + OFFSET) * 2, width / 3, 20, this.yOffset, Component.translatable("pigtagger.config.ignoredKits"));
         this.ignoredTiers.setHint(this.ignoredTiers.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.ignoredTiers.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.ignoredKits.tooltip")));
-        this.ignoredTiers.setTooltipDelay(250);
+        this.ignoredTiers.setTooltipDelay(Duration.ofMillis(250L));
         this.ignoredTiers.setMaxLength(128);
         this.ignoredTiers.setResponder(value -> {
             Set<Kit> out = new HashSet<>();

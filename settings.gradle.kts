@@ -11,3 +11,4 @@ pluginManagement {
 rootProject.name = "PigTagger"
 
 include("1.20.4")
+include("1.20.6")
