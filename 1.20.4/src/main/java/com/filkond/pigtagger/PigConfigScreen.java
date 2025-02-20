@@ -38,9 +38,9 @@ public class PigConfigScreen extends Screen {
         box.setTooltipDelay(250);
         this.addRenderableWidget(box);
 
-        this.badgeScale = new EditBox(this.font, width / 2 + OFFSET, height / 4, width / 6, 20, this.badgeScale, Component.translatable("ias.config.titleText.x"));
+        this.badgeScale = new EditBox(this.font, width / 2 + OFFSET, height / 4, width / 6, 20, this.badgeScale, Component.translatable("pigtagger.config.badge.scale"));
         this.badgeScale.setHint(this.badgeScale.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
-        this.badgeScale.setTooltip(Tooltip.create(Component.translatable("ias.config.titleText.x.tip", Component.translatable("key.keyboard.left.alt"))));
+        this.badgeScale.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.badge.scale.tooltip")));
         this.badgeScale.setTooltipDelay(250);
         this.badgeScale.setMaxLength(128);
         this.badgeScale.setResponder(value -> {
@@ -55,9 +55,9 @@ public class PigConfigScreen extends Screen {
         this.badgeScale.setValue(PigConfig.badgeScale == 0.01F ? "" : String.valueOf(PigConfig.badgeScale));
         this.addRenderableWidget(this.badgeScale);
 
-        this.xOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("ias.config.titleText.x"));
+        this.xOffset = new EditBox(this.font, width / 2 + OFFSET, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
         this.xOffset.setHint(this.xOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
-        this.xOffset.setTooltip(Tooltip.create(Component.translatable("ias.config.titleText.x.tip", Component.translatable("key.keyboard.left.alt"))));
+        this.xOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.xOffset.tooltip")));
         this.xOffset.setTooltipDelay(250);
         this.xOffset.setMaxLength(128);
         this.xOffset.setResponder(value -> {
@@ -73,9 +73,9 @@ public class PigConfigScreen extends Screen {
         this.addRenderableWidget(this.xOffset);
 
 
-        this.yOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.yOffset, Component.translatable("ias.config.titleText.x"));
+        this.yOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.yOffset, Component.translatable("pigtagger.config.yOffset"));
         this.yOffset.setHint(this.yOffset.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
-        this.yOffset.setTooltip(Tooltip.create(Component.translatable("ias.config.titleText.x.tip", Component.translatable("key.keyboard.left.alt"))));
+        this.yOffset.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.yOffset.tooltip")));
         this.yOffset.setTooltipDelay(250);
         this.yOffset.setMaxLength(128);
         this.yOffset.setResponder(value -> {
@@ -95,5 +95,7 @@ public class PigConfigScreen extends Screen {
     public void onClose() {
         assert minecraft != null;
         minecraft.setScreen(parent);
+
+        PigTagger.saveConfig();
     }
 }

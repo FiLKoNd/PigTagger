@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Path;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +22,15 @@ public class PigTagger {
     public static final int BADGE_WIDTH = 35;
     public static final int BADGE_HEIGHT = 17;
     private static final Duration TIMEOUT = Duration.ofSeconds(Long.getLong("pigtagger.timeout", 15L));
+
+    private static Path configFolder;
+
+    public static void init(Path configFolder) {
+        PigTagger.configFolder = configFolder;
+
+        PigConfig.load(configFolder);
+        PigTagger.updateTiers();
+    }
 
     public static void updateTiers() {
         try {
@@ -80,5 +90,9 @@ public class PigTagger {
         Map<Kit, Tier> out = getTiersByNickname(nickname);
         PigConfig.ignoredKits.forEach(out::remove);
         return out;
+    }
+
+    public static void saveConfig() {
+        PigConfig.save(configFolder);
     }
 }

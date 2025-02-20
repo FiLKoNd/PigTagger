@@ -30,7 +30,7 @@ public class PigConfig {
     public static float yOffset = 4F;
 
     /**
-     * Badge scale
+     * Badge's scale
      */
     public static float badgeScale = 0.01F;
 
