@@ -5,8 +5,7 @@ import com.filkond.pigtagger.PigTagger;
 import com.filkond.pigtagger.Tier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.StringSplitter;
+import net.minecraft.client.gui.Font;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -23,8 +22,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import java.util.HashMap;
 import java.util.Map;
+
+import static com.filkond.pigtagger.PigTagger.BADGE_HEIGHT;
+import static com.filkond.pigtagger.PigTagger.BADGE_WIDTH;
 
 @Mixin(PlayerRenderer.class)
 public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractClientPlayer, PlayerModel<AbstractClientPlayer>> {
@@ -40,10 +41,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
     @Inject(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
     private void renderNameTag(AbstractClientPlayer player, Component component, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, CallbackInfo ci) {
-        if (true) {
-            return;
-        }
-        renderBadges(player, poseStack, light);
+//        renderBadges(player, poseStack, light);
     }
 
     @Unique
@@ -51,31 +49,31 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         Map<Kit, Tier> tiers = PigTagger.getTiersByNickname(player.getName().getString());
         if (tiers.isEmpty()) return;
 
-        float scale = 0.007F;
+        float scale = 0.01F;
 
         poseStack.pushPose();
 
-        poseStack.translate(0, player.getBbHeight() + 0.8f, 0);
+        poseStack.translate(0, player.getBbHeight() + 0.5f, 0);
         poseStack.mulPose(entityRenderDispatcher.cameraOrientation());
         poseStack.scale(scale, scale, scale);
 
         Tesselator tesselator = Tesselator.getInstance();
         BufferBuilder vertexConsumer = tesselator.getBuilder();
 
-        vertexConsumer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.enableDepthTest();
-
-        Matrix4f model = poseStack.last().pose();
-
         float offset = 4F;
-        float maxX = 128F * tiers.size() + offset * (tiers.size() - 1);
+        float xSize = 35F;
+        float maxX = xSize * tiers.size() + offset * (tiers.size() - 1);
 
         float x = -maxX / 2;
         for (Map.Entry<Kit, Tier> entry : tiers.entrySet()) {
             var kit = entry.getKey();
             var tier = entry.getValue();
 
+            vertexConsumer.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.POSITION_TEX);
+            RenderSystem.setShader(GameRenderer::getPositionTexShader);
+            RenderSystem.enableDepthTest();
+
+            Matrix4f model = poseStack.last().pose();
             renderIcon(
                     -x,
                     kit.getIconForTier(tier),
@@ -83,11 +81,10 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
                     model,
                     light
             );
-            x += 128F;
-            x += offset;
+            tesselator.end();
+            x += xSize + offset;
         }
 
-        tesselator.end();
         poseStack.popPose();
     }
 
@@ -98,26 +95,36 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         float minV = 0F;
         float maxV = 1F;
 
-        float sizeX = 128;
-        float sizeY = 128;
         RenderSystem.setShaderTexture(0, icon);
 
-        vertexConsumer.vertex(model, x, 0F - sizeY, 0.0F).uv(minU, maxV).endVertex();
-        vertexConsumer.vertex(model, x - sizeX, 0F - sizeY, 0.0F).uv(maxU, maxV).endVertex();
-        vertexConsumer.vertex(model, x - sizeX, 0F, 0.0F).uv(maxU, minV).endVertex();
-        vertexConsumer.vertex(model, x, 0F, 0.0F).uv(minU, minV).endVertex();
+        drawVertex(model, vertexConsumer, x, 0F - BADGE_HEIGHT, 0, minU, maxV, light);
+        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0F - BADGE_HEIGHT, 0, maxU, maxV, light);
+        drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0, 0, maxU, minV, light);
+        drawVertex(model, vertexConsumer, x, 0, 0, minU, minV, light);
+
+//        vertexConsumer
+//                .vertex(model, x, 0F - sizeY, 0.0F)
+//                .uv(minU, maxV)
+//                .endVertex();
+//        vertexConsumer
+//                .vertex(model, x - sizeX, 0F - sizeY, 0.0F)
+//                .uv(maxU, maxV)
+//                .endVertex();
+//        vertexConsumer
+//                .vertex(model, x - sizeX, 0F, 0.0F)
+//                .uv(maxU, minV)
+//                .endVertex();
+//        vertexConsumer
+//                .vertex(model, x, 0F, 0.0F)
+//                .uv(minU, minV)
+//                .endVertex();
     }
 
     @Unique
-    private static void drawBuffer(PoseStack matrixStack, BufferBuilder vertexConsumer) {
-        BufferBuilder.RenderedBuffer builtBuffer;
-        try {
-            builtBuffer = vertexConsumer.endOrDiscardIfEmpty();
-            if (builtBuffer != null) {
-                BufferUploader.drawWithShader(builtBuffer);
-                builtBuffer.release();
-            }
-        } catch (Exception ignored) {
-        }
+    private void drawVertex(Matrix4f model, BufferBuilder vertexConsumer, float x, float y, float z, float u, float v, int light) {
+        vertexConsumer
+                .vertex(model, x, y, z)
+                .uv(u, v)
+                .endVertex();
     }
 }

@@ -18,6 +18,8 @@ import java.util.Map;
 
 public class PigTagger {
     public static final String MOD_ID = "pigtagger";
+    public static final int BADGE_WIDTH = 35;
+    public static final int BADGE_HEIGHT = 17;
     private static final Duration TIMEOUT = Duration.ofSeconds(Long.getLong("pigtagger.timeout", 15L));
 
     public static void updateTiers() {
