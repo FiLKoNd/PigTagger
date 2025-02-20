@@ -101,23 +101,6 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0F - BADGE_HEIGHT, 0, maxU, maxV, light);
         drawVertex(model, vertexConsumer, x - BADGE_WIDTH, 0, 0, maxU, minV, light);
         drawVertex(model, vertexConsumer, x, 0, 0, minU, minV, light);
-
-//        vertexConsumer
-//                .vertex(model, x, 0F - sizeY, 0.0F)
-//                .uv(minU, maxV)
-//                .endVertex();
-//        vertexConsumer
-//                .vertex(model, x - sizeX, 0F - sizeY, 0.0F)
-//                .uv(maxU, maxV)
-//                .endVertex();
-//        vertexConsumer
-//                .vertex(model, x - sizeX, 0F, 0.0F)
-//                .uv(maxU, minV)
-//                .endVertex();
-//        vertexConsumer
-//                .vertex(model, x, 0F, 0.0F)
-//                .uv(minU, minV)
-//                .endVertex();
     }
 
     @Unique

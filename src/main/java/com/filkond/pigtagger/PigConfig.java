@@ -33,6 +33,11 @@ public class PigConfig {
      */
     public static float badgeScale = 0.01F;
 
+    /**
+     * If {@code true} your own tier badges should not be rendering
+     */
+    public static boolean ignoreSelf = true;
+
     public static void load(@NotNull Path path) {
         try {
             Path file = path.resolve("pigtagger.json");
@@ -48,16 +53,12 @@ public class PigConfig {
             GSON.fromJson(json, PigConfig.class);
         } catch (Throwable t) {
             throw new RuntimeException("Unable to load PigTagger config.", t);
-        } finally {
-            titleTextAlign = Objects.requireNonNullElse(titleTextAlign, TextAlign.LEFT);
-            serversTextAlign = Objects.requireNonNullElse(serversTextAlign, TextAlign.LEFT);
-            server = Objects.requireNonNullElse(server, ServerMode.AVAILABLE);
         }
     }
 
     public static void save(@NotNull Path path) {
         try {
-            Path file = path.resolve("ias.json");
+            Path file = path.resolve("pigtagger.json");
 
             @SuppressWarnings("InstantiationOfUtilityClass")
             JsonObject json = (JsonObject) GSON.toJsonTree(new PigConfig());
