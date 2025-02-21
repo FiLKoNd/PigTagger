@@ -25,7 +25,7 @@ public enum Kit {
         this.iconPath = iconPath;
         for (Tier tier : Tier.values()) {
             String tierIconLocation = iconPath + tier.name().toLowerCase() + ".png";
-            icons.put(tier, new ResourceLocation(PigTagger.MOD_ID, tierIconLocation));
+            icons.put(tier, ResourceLocation.tryBuild(PigTagger.MOD_ID, tierIconLocation));
         }
     }
 

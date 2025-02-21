@@ -2,25 +2,26 @@
   "schemaVersion": 1,
   "id": "pigtagger",
   "version": "${version}",
-
   "name": "PigTagger",
   "description": "",
-  "authors": ["FiLKoNd"],
+  "authors": [
+    "FiLKoNd"
+  ],
   "contact": {},
-
   "license": "All-Rights-Reserved",
   "icon": "assets/pigtagger/icon.png",
-
   "environment": "client",
   "entrypoints": {
-    "client": ["com.filkond.pigtagger.PigTaggerMod"],
-    "modmenu": ["com.filkond.pigtagger.PigModMenu"]
+    "client": [
+      "com.filkond.pigtagger.PigTaggerMod"
+    ],
+    "modmenu": [
+      "com.filkond.pigtagger.PigModMenu"
+    ]
   },
-
   "mixins": [
     "pigtagger.mixins.json"
   ],
-
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*",

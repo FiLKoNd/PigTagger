@@ -11,9 +11,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class PigConfigScreen extends Screen {
-    private final Screen parent;
     private static final int OFFSET = 4;
-
+    private final Screen parent;
     private EditBox xOffset;
     private EditBox yOffset;
 
@@ -91,7 +90,7 @@ public class PigConfigScreen extends Screen {
         this.yOffset.setValue(PigConfig.yOffset == 0.4F ? "" : String.valueOf(PigConfig.yOffset));
         this.addRenderableWidget(this.yOffset);
 
-        this.ignoredTiers = new EditBox(this.font, width / 3, height / 4 + (20 + OFFSET) * 2, width / 3, 20, this.yOffset, Component.translatable("pigtagger.config.ignoredKits"));
+        this.ignoredTiers = new EditBox(this.font, width / 3, height / 4 + (20 + OFFSET) * 2, width / 3, 20, this.ignoredTiers, Component.translatable("pigtagger.config.ignoredKits"));
         this.ignoredTiers.setHint(this.ignoredTiers.getMessage().copy().withStyle(ChatFormatting.DARK_GRAY));
         this.ignoredTiers.setTooltip(Tooltip.create(Component.translatable("pigtagger.config.ignoredKits.tooltip")));
         this.ignoredTiers.setTooltipDelay(250);

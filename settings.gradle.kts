@@ -10,5 +10,5 @@ pluginManagement {
 
 rootProject.name = "PigTagger"
 
-include("1.20.4")
-include("1.20.6")
+val versions = listOf("1.20.4", "1.20.6", "1.21.1", "1.21.4")
+include(versions)

@@ -67,6 +67,7 @@ public class PigTagger {
 
     /**
      * Get all the tiers that player have
+     *
      * @param nickname Player's nickname
      * @return {@link Kit} collection that mapped to {@link Tier}
      */
@@ -83,6 +84,7 @@ public class PigTagger {
 
     /**
      * Get all the tiers that player have, except for {@link PigConfig#ignoredKits}
+     *
      * @param nickname Player's nickname
      * @return {@link Kit} collection that mapped to {@link Tier}
      */
