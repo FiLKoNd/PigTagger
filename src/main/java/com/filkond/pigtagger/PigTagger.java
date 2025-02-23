@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.net.URI;
@@ -11,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.net.http.HttpTimeoutException;
 import java.nio.file.Path;
 import java.time.Duration;
 import java.util.HashMap;
@@ -23,6 +26,7 @@ public class PigTagger {
     public static final int BADGE_HEIGHT = 17;
     private static final Duration TIMEOUT = Duration.ofSeconds(Long.getLong("pigtagger.timeout", 15L));
 
+    public static final Logger LOGGER = LoggerFactory.getLogger("PigTagger");
     private static Path configFolder;
 
     public static void init(Path configFolder) {
@@ -61,6 +65,10 @@ public class PigTagger {
             }
 
         } catch (URISyntaxException | IOException | InterruptedException e) {
+            if (e instanceof HttpTimeoutException) {
+                LOGGER.info("ошибка вы хохол");
+                return;
+            }
             throw new RuntimeException(e);
         }
     }

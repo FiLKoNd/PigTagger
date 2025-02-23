@@ -2,11 +2,11 @@ plugins {
     alias(libs.plugins.fabric.loom)
 }
 
-java.sourceCompatibility = JavaVersion.VERSION_17
-java.targetCompatibility = JavaVersion.VERSION_17
-java.toolchain.languageVersion = JavaLanguageVersion.of(17)
+java.sourceCompatibility = JavaVersion.VERSION_16
+java.targetCompatibility = JavaVersion.VERSION_16
+java.toolchain.languageVersion = JavaLanguageVersion.of(16)
 group = "com.filkond.pigtagger"
-base.archivesName = "PigTagger-1.19.4"
+base.archivesName = "PigTagger-1.16.5"
 
 repositories {
     maven("https://repo.spongepowered.org/repository/maven-public/")
@@ -28,12 +28,15 @@ loom {
 }
 
 dependencies {
-    minecraft(libs.minecraft.mc1194)
+    minecraft(libs.minecraft.mc1165)
     mappings(loom.officialMojangMappings())
 
     modImplementation(libs.fabric.loader)
-    modImplementation(libs.fabric.mc1194)
-    modImplementation(libs.modmenu.mc1194)
+    modImplementation(libs.fabric.mc1165)
+    modImplementation(libs.modmenu.mc1165)
+
+    implementation(libs.slf4j)
+    implementation(libs.gson)
 
     compileOnly(libs.mixin)
 
@@ -43,19 +46,19 @@ dependencies {
 tasks.withType<JavaCompile> {
     source(rootProject.sourceSets.main.get().java)
     options.encoding = "UTF-8"
-    options.release = 17
+    options.release = 16
 }
 
 tasks.withType<ProcessResources> {
     from(rootProject.sourceSets.main.get().resources)
     inputs.property("version", project.version)
-    inputs.property("minecraft_version", libs.versions.minecraft.mc1194.get())
+    inputs.property("minecraft_version", libs.versions.minecraft.mc1165.get())
     inputs.property("loader_version", libs.versions.fabric.loader.get())
 
     filesMatching("fabric.mod.json") {
         expand(
             "version" to project.version,
-            "minecraft_version" to libs.versions.minecraft.mc1194.get(),
+            "minecraft_version" to libs.versions.minecraft.mc1165.get(),
             "loader_version" to libs.versions.fabric.loader.get()
         )
     }
