@@ -39,8 +39,8 @@ slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 
 fabric-loader = { module = "net.fabricmc:fabric-loader", version.ref = "fabric-loader" }
 
-fabric-mc1165 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1165"}
-fabric-mc1194 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1194"}
+fabric-mc1165 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1165" }
+fabric-mc1194 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1194" }
 fabric-mc1204 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1204" }
 fabric-mc1206 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1206" }
 fabric-mc1211 = { module = "net.fabricmc.fabric-api:fabric-api", version.ref = "fabric-mc1211" }

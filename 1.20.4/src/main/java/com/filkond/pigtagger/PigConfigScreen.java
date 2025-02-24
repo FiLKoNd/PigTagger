@@ -48,11 +48,11 @@ public class PigConfigScreen extends Screen {
                 PigConfig.badgeScale = Float.parseFloat(value);
                 this.badgeScale.setTextColor(0xFF_E0_E0_E0);
             } catch (NumberFormatException e) {
-                PigConfig.badgeScale = 0.01F;
+                PigConfig.badgeScale = PigConfig.DEFAULT_BADGE_SCALE;
                 this.badgeScale.setTextColor(0xFF_FF_00_00);
             }
         });
-        this.badgeScale.setValue(PigConfig.badgeScale == 0.01F ? "" : String.valueOf(PigConfig.badgeScale));
+        this.badgeScale.setValue(PigConfig.badgeScale == PigConfig.DEFAULT_BADGE_SCALE ? "" : String.valueOf(PigConfig.badgeScale));
         this.addRenderableWidget(this.badgeScale);
 
         this.xOffset = new EditBox(this.font, width / 3, height / 4 + 20 + OFFSET, width / 6, 20, this.xOffset, Component.translatable("pigtagger.config.xOffset"));
@@ -65,11 +65,11 @@ public class PigConfigScreen extends Screen {
                 PigConfig.xOffset = Float.parseFloat(value);
                 this.xOffset.setTextColor(0xFF_E0_E0_E0);
             } catch (NumberFormatException e) {
-                PigConfig.xOffset = 0.5F;
+                PigConfig.xOffset = PigConfig.DEFAULT_X_OFFSET;
                 this.xOffset.setTextColor(0xFF_FF_00_00);
             }
         });
-        this.xOffset.setValue(PigConfig.xOffset == 0.5F ? "" : String.valueOf(PigConfig.yOffset));
+        this.xOffset.setValue(PigConfig.xOffset == PigConfig.DEFAULT_X_OFFSET ? "" : String.valueOf(PigConfig.yOffset));
         this.addRenderableWidget(this.xOffset);
 
 
@@ -83,11 +83,11 @@ public class PigConfigScreen extends Screen {
                 PigConfig.yOffset = Float.parseFloat(value);
                 this.yOffset.setTextColor(0xFF_E0_E0_E0);
             } catch (NumberFormatException e) {
-                PigConfig.yOffset = 0.4F;
+                PigConfig.yOffset = PigConfig.DEFAULT_Y_OFFSET;
                 this.yOffset.setTextColor(0xFF_FF_00_00);
             }
         });
-        this.yOffset.setValue(PigConfig.yOffset == 0.4F ? "" : String.valueOf(PigConfig.yOffset));
+        this.yOffset.setValue(PigConfig.yOffset == PigConfig.DEFAULT_Y_OFFSET ? "" : String.valueOf(PigConfig.yOffset));
         this.addRenderableWidget(this.yOffset);
 
         this.ignoredTiers = new EditBox(this.font, width / 3, height / 4 + (20 + OFFSET) * 2, width / 3, 20, this.ignoredTiers, Component.translatable("pigtagger.config.ignoredKits"));

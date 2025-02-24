@@ -6,12 +6,13 @@ import com.filkond.pigtagger.PigTagger;
 import com.filkond.pigtagger.Tier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.CoreShaders;
+import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.spongepowered.asm.mixin.Unique;
 
 import java.util.Map;
 
@@ -19,7 +20,11 @@ import static com.filkond.pigtagger.PigTagger.BADGE_HEIGHT;
 import static com.filkond.pigtagger.PigTagger.BADGE_WIDTH;
 
 public class RenderUtil {
-    public static void renderBadges(Player player, Quaternionf cameraOrientation, PoseStack poseStack, int light) {
+    public static void renderBadges(Player player, EntityRenderDispatcher dispatcher, PoseStack poseStack, int light) {
+        if (!shouldRenderForPlayer(player)) {
+            return;
+        }
+
         Map<Kit, Tier> tiers = PigTagger.getEnabledTiersByNickname(player.getName().getString());
         if (tiers.isEmpty()) return;
 
@@ -28,7 +33,7 @@ public class RenderUtil {
         poseStack.pushPose();
 
         poseStack.translate(0, player.getBbHeight() + PigConfig.yOffset, 0);
-        poseStack.mulPose(cameraOrientation);
+        poseStack.mulPose(dispatcher.cameraOrientation());
         poseStack.scale(-1, 1, 1);
         poseStack.scale(scale, scale, scale);
 
@@ -78,5 +83,14 @@ public class RenderUtil {
         vertexConsumer
                 .addVertex(model, x, y, 0F)
                 .setUv(u, v);
+    }
+
+
+    private static boolean shouldRenderForPlayer(Entity entity) {
+        if (entity instanceof Player abstractClientPlayerEntity) {
+            return (!PigConfig.ignoreSelf || !abstractClientPlayerEntity.isLocalPlayer()) && !abstractClientPlayerEntity.isInvisibleTo(Minecraft.getInstance().player);
+        }
+
+        return false;
     }
 }

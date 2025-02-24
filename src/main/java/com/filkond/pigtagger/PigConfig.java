@@ -16,24 +16,27 @@ import java.util.Set;
  * Определенно не спизженно
  */
 public class PigConfig {
+    // cringe
+    public static final float DEFAULT_X_OFFSET = 0.5F;
+    public static final float DEFAULT_Y_OFFSET = 0.8F;
+    public static final float DEFAULT_BADGE_SCALE = 0.015F;
     private static final Gson GSON = new GsonBuilder()
             .excludeFieldsWithModifiers(Modifier.TRANSIENT, Modifier.FINAL)
             .create();
-
     /**
      * Distance between badges
      */
-    public static float xOffset = 0.5F;
+    public static float xOffset = DEFAULT_X_OFFSET;
 
     /**
      * Distance to badges above the player's head
      */
-    public static float yOffset = 0.4F;
+    public static float yOffset = DEFAULT_Y_OFFSET;
 
     /**
      * Badge's scale
      */
-    public static float badgeScale = 0.01F;
+    public static float badgeScale = DEFAULT_BADGE_SCALE;
 
     /**
      * If {@code true} your own tier badges should not be rendering

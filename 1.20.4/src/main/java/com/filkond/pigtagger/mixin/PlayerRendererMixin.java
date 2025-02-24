@@ -6,6 +6,7 @@ import com.filkond.pigtagger.PigTagger;
 import com.filkond.pigtagger.Tier;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.GameRenderer;
@@ -33,6 +34,11 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
         super(context, entityModel, f);
     }
 
+    @Unique
+    private static boolean shouldRenderForPlayer(AbstractClientPlayer player) {
+        return (!PigConfig.ignoreSelf || !player.isLocalPlayer()) && !player.isInvisibleTo(Minecraft.getInstance().player);
+    }
+
     @Inject(method = "render(Lnet/minecraft/client/player/AbstractClientPlayer;FFLcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
     private void render(AbstractClientPlayer player, float f, float g, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, CallbackInfo ci) {
         if (!PigConfig.ignoreSelf) {
@@ -42,7 +48,7 @@ public abstract class PlayerRendererMixin extends LivingEntityRenderer<AbstractC
 
     @Inject(method = "renderNameTag(Lnet/minecraft/client/player/AbstractClientPlayer;Lnet/minecraft/network/chat/Component;Lcom/mojang/blaze3d/vertex/PoseStack;Lnet/minecraft/client/renderer/MultiBufferSource;I)V", at = @At("HEAD"))
     private void renderNameTag(AbstractClientPlayer player, Component component, PoseStack poseStack, MultiBufferSource multiBufferSource, int light, CallbackInfo ci) {
-        if (PigConfig.ignoreSelf) {
+        if (shouldRenderForPlayer(player)) {
             renderBadges(player, poseStack, light);
         }
     }
