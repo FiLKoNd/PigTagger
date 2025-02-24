@@ -35,7 +35,6 @@ dependencies {
     modImplementation(libs.fabric.mc1165)
     modImplementation(libs.modmenu.mc1165)
 
-    implementation(libs.slf4j)
     implementation(libs.gson)
 
     compileOnly(libs.mixin)
