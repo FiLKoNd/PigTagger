@@ -18,9 +18,11 @@ import java.util.Map;
 
 public class PigTagger {
     public static final String MOD_ID = "pigtagger";
+    private static final Duration TIMEOUT = Duration.ofSeconds(Long.getLong("pigtagger.timeout", 15L));
+    private final static String TIERS_API_URL = "https://api.cistiers.net";
+
     public static final int BADGE_WIDTH = 35;
     public static final int BADGE_HEIGHT = 17;
-    private static final Duration TIMEOUT = Duration.ofSeconds(Long.getLong("pigtagger.timeout", 15L));
 
     private static Path configFolder;
 
@@ -42,7 +44,7 @@ public class PigTagger {
             for (Kit kit : Kit.values()) {
                 kit.getUsers().clear();
                 client.sendAsync(HttpRequest.newBuilder()
-                        .uri(new URI("https://api.cistiers.ru/v1/get-table/" + kit.getId()))
+                        .uri(new URI(TIERS_API_URL + "/v1/get-table/" + kit.getId()))
                         .timeout(TIMEOUT)
                         .GET()
                         .build(), HttpResponse.BodyHandlers.ofString()).thenApply(HttpResponse::body).thenAccept(body -> {
